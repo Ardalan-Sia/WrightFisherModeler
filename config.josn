@@ -1,0 +1,7 @@
+{
+    "num_simulations": 20,
+    "population_sizes": [1000, 500, 100, 50],
+    "initial_frequency": 0.5,
+    "generations": [50]
+    "mutation_rate": 0.01
+}
