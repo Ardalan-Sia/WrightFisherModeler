@@ -14,25 +14,11 @@ class WrightFisherModel:
     def simulate(self):
             freq = self.initial_freq
             frequencies = [freq]
-            for t in self.generations:
+            for t in range(self.generations):
                 freq = np.random.binomial(self.population_size, freq)/self.population_size
                 frequencies.append(freq)
+            return frequencies
     
-    def run_simulations(population_size, initial_frequency, selection_coefficient, mutation_rate, generations, num_simulations):
-        simulations = []
-        wf_model = WrightFisherModel(population_size, initial_frequency, selection_coefficient, mutation_rate)
-        for _ in range(num_simulations):
-            simulations.append(wf_model.simulate(generations))
-        return simulations
-
-    def plot_simulations(simulations, title):
-        plt.figure(figsize=(10, 6))
-        for sim in simulations:
-            plt.plot(sim, alpha=0.5)
-        plt.xlabel('Generations')
-        plt.ylabel('Allele Frequency')
-        plt.title(title)
-        plt.show()
 
         
     def get_results(self):
