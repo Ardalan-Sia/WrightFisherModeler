@@ -17,7 +17,8 @@ def main():
     population_sizes = config["population_sizes"]
     initial_frequencies = config["initial_frequency"]
     generations = config["generations"]
-    mutation_rate = config["mutation_rate"]
+    forward_mutation_rate = config["forward_mutation_rate"]
+    reverse_mutation_rate = config["reverse_mutation_rate"]
     
     count = 1
     all_simulations = []
@@ -32,7 +33,7 @@ def main():
     
     for population_size in population_sizes:
         for freq in initial_frequencies:
-            simulations = run_simulations(population_size, freq, mutation_rate, generations, num_simulations)
+            simulations = run_simulations(population_size, freq, forward_mutation_rate, reverse_mutation_rate, generations, num_simulations)
             all_simulations.append((simulations, population_colors[population_size]))
             title = f"Simulation #{count}\npop_size={population_size}, init_freq={freq}"
             titles.append(title)
@@ -41,16 +42,18 @@ def main():
     plot_all_simulations(all_simulations, titles)
 
 
-def run_simulations(population_size, initial_frequency, mutation_rate, generations, num_simulations):
+def run_simulations(population_size, initial_frequency, forward_mutation_rate, reverse_mutation_rate, generations, num_simulations):
     simulations = []
-    wf_model = WrightFisherModel(population_size, generations, initial_frequency, mutation_rate)
+    simulations_with_mutation = []
+    wf_model = WrightFisherModel(population_size, generations, initial_frequency, forward_mutation_rate, reverse_mutation_rate)
     for _ in range(num_simulations):
-        simulations.append(wf_model.simulate())
+        # simulations.append(wf_model.simulate_genetic_drift())
+        simulations.append(wf_model.simulate_genetic_drift_with_mutation())
     return simulations
 
 def plot_all_simulations(all_simulations, titles):
     num_plots = len(all_simulations)
-    rows = cols = 4
+    rows, cols = 3,3
     fig, axs = plt.subplots(rows, cols, figsize=(15, 15))
     
     for idx, ((simulations, color), title) in enumerate(zip(all_simulations, titles)):
@@ -65,7 +68,7 @@ def plot_all_simulations(all_simulations, titles):
         ax.set_ylim(0, 1)
         
     fig.suptitle('Wright-Fisher Model Simulations', fontsize=16)
-    plt.subplots_adjust(wspace=0.6, hspace=0.9)
+    plt.subplots_adjust(wspace=0.4, hspace=0.6)
     plt.show()
 
 
