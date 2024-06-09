@@ -4,13 +4,13 @@ import matplotlib.pyplot as plt
 class WrightFisherModel:
     
     def __init__(self, population_size: int, generations: int, initial_frequency: float, 
-                 forward_mutation_rate: float = -1, reverse_mutation_rate: float = 0) -> None:
+                 forward_mutation_rate: float = 0, reverse_mutation_rate: float = 0) -> None:
         self.population_size = population_size
         self.generations = generations
         self.initial_frequency = initial_frequency
         self.forward_mutation_rate = forward_mutation_rate
         self.reverse_mutation_rate = reverse_mutation_rate
-        self.allele_frequencies = []
+        self.allele_frequencies  = []
         
     def simulate_genetic_drift(self):
         """
